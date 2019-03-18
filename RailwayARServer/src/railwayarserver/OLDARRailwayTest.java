@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  * @author 97saundersj
  */
-public class ARRailwayTest
+public class OLDARRailwayTest
 {
 
     public static void main(String[] args) throws IOException
@@ -22,16 +22,16 @@ public class ARRailwayTest
         serverThread.start();
 
         ArrayList<String> trackList = new ArrayList<>();
-        
-        for (int i = 1; i < 19; i++)
-        {
-        	trackList.add("green");
-        }
-        
+        trackList.add("green");
+        trackList.add("green");
+        trackList.add("green");
+        trackList.add("green");
 
+        ArrayList<String> switchList = new ArrayList<>();
+        switchList.add("right");
 
-        serverThread.setData(trackList);
-        System.out.println(trackList.toString());
+        //serverThread.setData(trackList, switchList);
+        System.out.println(trackList.toString() + switchList.toString());
         
         Scanner sc = new Scanner(System.in);
 
@@ -39,10 +39,11 @@ public class ARRailwayTest
         while (true)
         {
             trackList = new ArrayList<>();
+            switchList = new ArrayList<>();
 
             sc.nextLine();
 
-            for (int i = 0; i < 17; i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (i == trainLocation)
                 {
@@ -55,13 +56,20 @@ public class ARRailwayTest
             }
 
             trackList.add("green");
-
             
+            if (trainLocation > 2)
+            {
+                switchList.add("right");
+            }
+            else
+            {
+                switchList.add("left");
+            }
 
-            serverThread.setData(trackList);
+            //serverThread.setData(trackList, switchList);
 
-            System.out.println(trackList.toString());
-            if (trainLocation > 16)
+            System.out.println(trackList.toString() + switchList.toString());
+            if (trainLocation > 2)
             {
                 trainLocation = 0;
             } else
@@ -70,8 +78,6 @@ public class ARRailwayTest
             }
         }
     }
+    
+    
 }
-    
-    
-    
-

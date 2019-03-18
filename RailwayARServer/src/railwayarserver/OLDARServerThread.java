@@ -17,7 +17,7 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ARServerThread extends Thread
+public class OLDARServerThread extends Thread
 {
 
     protected DatagramSocket socket = null;
@@ -25,7 +25,7 @@ public class ARServerThread extends Thread
     protected boolean moreQuotes = true;
     public String data;
     
-    public ARServerThread( ) throws IOException
+    public OLDARServerThread( ) throws IOException
     {
         socket = new DatagramSocket(4445);
         data = "";
@@ -36,7 +36,7 @@ public class ARServerThread extends Thread
      * @param trackStates example [green, green, red, green]
      * @param switchStates example [left]
      */
-    public void setData(ArrayList<String> trackStates)
+    public void setData(ArrayList<String> trackStates, ArrayList<String> switchStates)
     {
         JSONObject json = new JSONObject();
         
@@ -50,9 +50,19 @@ public class ARServerThread extends Thread
             }
 
             json.put("trackStates", trackStatesJSON);
+            
+            //Switch
+            JSONObject switchStatesJSON = new JSONObject();
+            
+            for (int i = 0; i < switchStates.size(); i++)
+            {
+                switchStatesJSON.put(Integer.toString(i), switchStates.get(i));
+            }
+
+            json.put("switchStates", switchStatesJSON);
 
             //Example of JSON string
-            //{"trackStates":{"0":"green","1":"green","2":"green","3":"green"}}
+            //{"trackStates":{"0":"green","1":"green","2":"green","3":"green"},"switchStates":{"0":"right"}}
             data = json.toString();
 
         } catch (JSONException e)
